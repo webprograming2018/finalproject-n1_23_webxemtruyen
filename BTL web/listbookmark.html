@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta author="tps" content="tungpzostar">
+    <title>Doctruyen - Ajin</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+
+
+</head>
+
+<body onload="fetchBookmarks()">
+    <header>
+        <div class="container1">
+            <div id="brand">
+                <h1><a href="main.html"><i class="fas fa-book"> Doctruyen</i></a></h1>
+            </div>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="main.html"><i class="fa fa-home"></i> Trang chủ</a></li>
+                    <li class="dropdown"><a href="type.html" class="dropbtn">&#x2630; Thể loại</a>
+                        <div class="dropdown-content">
+                            <a href="tinhcam.html">Tình cảm</a>
+                            <a href="kinhdi.html">Kinh dị</a>
+                            <a href="hai.html">Hài hước</a>
+                            <a href="trinhtham.html">Trinh thám</a>
+                            <a href="ngan.html">Hành động</a>
+                        </div>
+                    </li>
+                    <li><a href="listbookmark.html"><i class="fa fa-save"></i> Các truyện đã lưu</a></li>
+                    <li><a href="contact.html"><i class="fa fa-phone"></i> Liên hệ</a></li>
+                    <li class="find">
+                        <form>
+                            <input type="text" placeholder="Nhập tên truyện cần tìm..." name="">
+                            <button type="submit" class="button1"><i class="fa fa-search"></i></button>
+
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <content class="container2" style="width: 80%;margin: auto;">
+        <div class="left-column">
+            <div class="card">
+                <div id="bookmarksResults">
+
+                </div>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="title">
+                <h5><strong>Tin tức:</strong></h5>
+                <ul>
+                    <li></li>
+                </ul>
+                <h5><strong>Thể loại truyện:</strong></h5>
+                <ul>
+                    <li><a href="tinhcam.html">Tình cảm</a></li>
+                    <li><a href="kinhdi.html">Kinh dị</a></li>
+                    <li><a href="hai.html">Hài hước</a></li>
+                    <li><a href="trinhtham.html">Trinh thám</a></li>
+                    <li><a href="ngan.html">Hành động</a></li>
+                </ul>
+            </div>
+        </div>
+    </content>
+    <footer class="footer">
+        <p><strong>Doctruyen.com </strong>- Website đọc truyện tranh</p>
+        <p>Coyright &copy; 2018</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="notify.min.js"></script>
+    <script type="text/javascript">
+        function deleteBookmark(url) {
+            var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+
+            for (var i = 0; i < bookmarks.length; i++) {
+                if (bookmarks[i].url == url) {
+                    bookmarks.splice(i, 1);
+                }
+            }
+            $.notify("Xoá truyện thành công", "success");
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+            
+            fetchBookmarks();
+        }
+
+        //Fetch bookmarks
+        function fetchBookmarks() {
+            var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+
+            //Get output id
+            var bookmarksResults = document.getElementById('bookmarksResults');
+
+            bookmarksResults.innerHTML = '';
+
+            for (var i = 0; i < bookmarks.length; i++) {
+                var url = bookmarks[i].url;
+                var name = bookmarks[i].name;
+                var image = bookmarks[i].image;
+                console.log(image);
+
+                bookmarksResults.innerHTML += '<div class="card"><img src=' + image + '><div class="information"><h4>' + name + ':&nbsp;<a class="button" href="' + url + '" style="text-decoration:none;">Xem truyện</a>'
+                    + '&nbsp;<a class="button" id="delete" onclick="deleteBookmark(\'' + url + '\')" href="#" style="text-decoration:none;">Xoá</a>'
+                    + '</h4></div></div>';
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>
